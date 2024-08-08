@@ -7,9 +7,14 @@ describe("User", () => {
   let userRepository: IUserRepository;
   beforeAll(() => {
     userRepository = {
-      createUser: jest.fn().mockImplementation((data: CreateUserDTO) => {
-        return "Dummy code to store in DB";
-      }),
+      createUser: jest
+        .fn()
+        .mockImplementationOnce((data: CreateUserDTO) => {
+          return "Dummy code to store in DB";
+        })
+        .mockImplementationOnce((data: CreateUserDTO) => {
+          throw new Error("User name already taken");
+        }),
       updateUser: jest.fn().mockImplementation((data: CreateUserDTO) => {
         return "Dummy code to store in DB";
       }),
@@ -51,5 +56,14 @@ describe("User", () => {
     expect(userRepository.createUser).toHaveReturnedWith(
       "Dummy code to store in DB"
     );
+  });
+  it("Should throw error in case of user already exist", () => {
+    expect(
+      user.createUser({
+        dob: new Date("2000-01-01"),
+        password: "test@123",
+        userName: "Raj",
+      })
+    ).rejects.toThrow("User name already taken");
   });
 });
