@@ -24,7 +24,7 @@ describe("User", () => {
   it("Should throw Age eligibility error", () => {
     expect(
       user.createUser({
-        dob: new Date("2015-01-01"),
+        dob: "2015-01-01",
         password: "openpassword",
         userName: "Raj",
       })
@@ -34,7 +34,7 @@ describe("User", () => {
   it("Should throw password security issue", () => {
     expect(
       user.createUser({
-        dob: new Date("2000-01-01"),
+        dob: "2000-01-01",
         password: "openpassword",
         userName: "Raj",
       })
@@ -46,7 +46,7 @@ describe("User", () => {
   it("Should create user", () => {
     expect(
       user.createUser({
-        dob: new Date("2000-01-01"),
+        dob: "2000-01-01",
         password: "test@123",
         userName: "Raj",
       })
@@ -60,7 +60,7 @@ describe("User", () => {
   it("Should throw error in case of user already exist", () => {
     expect(
       user.createUser({
-        dob: new Date("2000-01-01"),
+        dob: "2000-01-01",
         password: "test@123",
         userName: "Raj",
       })
